@@ -10,7 +10,7 @@ const ApiKeyMissingAlert = () => (
   <div className="mb-4 p-6 bg-yellow-50 border border-yellow-200 rounded-lg text-yellow-800">
     <p className="mb-3">To get started, you need to initialize Tambo:</p>
     <div className="flex items-center gap-2 bg-gray-100 p-3 rounded mb-3">
-      <code className="text-sm flex-grow">npx tambo init</code>
+      <code className="text-sm grow">npx tambo init</code>
       <CopyButton text="npx tambo init" />
     </div>
     <p className="text-sm">
@@ -86,12 +86,12 @@ export function ApiKeyCheck({ children }: ApiKeyCheckProps) {
 
   return (
     <div className="flex items-start gap-4">
-      <div className="flex-grow">
+      <div className="grow">
         <div className="flex items-center gap-1">
-          <div className="min-w-6">{isApiKeyMissing ? "❌" : "✅"}</div>
-          <p>
+          {/* <div className="min-w-6">{isApiKeyMissing ? "❌" : "✅"}</div> */}
+          {/* <p>
             {isApiKeyMissing ? "Tambo not initialized" : "Tambo initialized"}
-          </p>
+          </p> */}
         </div>
         {isApiKeyMissing && <ApiKeyMissingAlert />}
         {!isApiKeyMissing && children}
