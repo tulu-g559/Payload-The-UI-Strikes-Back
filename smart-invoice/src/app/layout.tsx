@@ -1,11 +1,8 @@
-"use client";
-
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata } from "next";
+import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 
-import { TamboProvider } from "@tambo-ai/react";
-import { components } from "@/lib/tambo";
-import { MessageThreadCollapsible } from "@/components/tambo/message-thread-collapsible";
+import { Providers } from "@/components/providers";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -17,6 +14,20 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+// 2. Configure Poppins
+const poppins = Poppins({
+  subsets: ["latin"],
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-poppins",
+});
+
+export const metadata: Metadata = {
+  title: "Payload: Smart Invoicing",
+  description: "AI Powered Invoicing",
+};
+
+
+
 export default function RootLayout({
   children,
 }: {
@@ -25,17 +36,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
-        <TamboProvider
-          apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY ?? ""}
-          components={components}
-        >
-          {children}
-
-          {/* Collapsible AI UI lives globally */}
-          <MessageThreadCollapsible />
-        </TamboProvider>
+        <Providers>{children}</Providers>
       </body>
     </html>
   );
