@@ -4,7 +4,8 @@ import { MessageThreadFull } from "@/components/tambo/message-thread-full";
 import { useMcpServers } from "@/components/tambo/mcp-config-modal";
 import { components, tools } from "@/lib/tambo";
 import { TamboProvider } from "@tambo-ai/react";
-import { motion } from "framer-motion";
+import { X, Sparkles } from "lucide-react"; // Import icons for the header
+import Link from "next/link";
 
 /**
  * Chat page component that renders the Tambo chat interface with a dark theme.
@@ -23,7 +24,7 @@ export default function ChatPage() {
 
   return (
     // 1. Root Container: Dark background, Green selection color
-    <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden selection:bg-emerald-500/30">
+    <div className="relative min-h-screen bg-[#050505] text-white overflow-hidden selection:bg-emerald-500/30 font-sans">
 
       {/* ─────────────── Static Background Layers ─────────────── */}
 
@@ -32,47 +33,43 @@ export default function ChatPage() {
         aria-hidden
         className="absolute inset-0 z-0 pointer-events-none"
         style={{
-          // Linear gradients create lines (squares)
           backgroundImage: `
-            linear-gradient(to right, rgba(16, 185, 129, 0.15) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(16, 185, 129, 0.15) 1px, transparent 1px)
+            linear-gradient(to right, rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
           `,
           backgroundSize: "50px 50px",
+          maskImage: "radial-gradient(circle at center, black 60%, transparent 100%)",
         }}
       />
 
-      {/* 2. Top Left Orb - Deep Emerald (Static) */}
+      {/* 2. Top Left Orb (Static) */}
       <div
-        className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-emerald-600/40 rounded-full blur-[120px] z-0 pointer-events-none"
-        style={{ opacity: 0.6 }} // Fixed opacity
+        className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-emerald-600/30 rounded-full blur-[120px] z-0 pointer-events-none"
+        style={{ opacity: 0.6 }}
       />
 
-      {/* 3. Top Right Orb - Solid & Defined (Static) */}
+      {/* 3. Top Right Orb (Static) */}
       <div
         className="absolute -top-[120px] -right-[120px] w-[600px] h-[600px] rounded-full z-[1] pointer-events-none"
         style={{
-          background: "linear-gradient(to bottom left, rgba(52, 211, 153, 0.6), rgba(16, 185, 129, 0.3))",
-          filter: "blur(50px)", 
-          border: "1px solid rgba(52, 211, 153, 0.3)"
+          background: "linear-gradient(to bottom left, rgba(52, 211, 153, 0.5), rgba(16, 185, 129, 0.2))",
+          filter: "blur(60px)", 
         }}
       />
 
-      {/* 4. Right Center Orb - Glow (Static) */}
+      {/* 4. Right Center Glow (Static) */}
       <div
-        className="absolute top-1/2 right-0 translate-x-1/3 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/40 rounded-full blur-[120px] z-[2] pointer-events-none mix-blend-screen"
-        style={{ opacity: 0.45 }}
+        className="absolute top-1/2 right-0 translate-x-1/3 -translate-y-1/2 w-[500px] h-[500px] bg-emerald-500/30 rounded-full blur-[120px] z-[0] pointer-events-none mix-blend-screen"
       />
 
-      {/* 5. Bottom Right Orb - Vivid Green (Static) */}
+      {/* 5. Bottom Right Orb (Static) */}
       <div
-        className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-green-500/30 rounded-full blur-[140px] z-0 pointer-events-none"
-        style={{ opacity: 0.5 }}
+        className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-green-500/20 rounded-full blur-[140px] z-0 pointer-events-none"
       />
 
 
-      {/* ─────────────── Main Chat Content ─────────────── */}
-      <div className="relative z-10 h-screen flex flex-col">
-        {/* Optional: Add a subtle header or leave full screen for chat */}
+      {/* ─────────────── Main Chat Interface ─────────────── */}
+      <div className="relative z-10 h-screen w-full flex items-center justify-center p-4 md:p-6 lg:p-8">
         
         <TamboProvider
           apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
@@ -81,12 +78,35 @@ export default function ChatPage() {
           tamboUrl={process.env.NEXT_PUBLIC_TAMBO_URL}
           mcpServers={mcpServers}
         >
-          <div className="flex-1 w-full h-full backdrop-blur-[2px]">
-             {/* Tip: If MessageThreadFull has a white background, 
-                you may need to add 'bg-transparent' or 'bg-[#0A0A0A]' 
-                via global CSS or component props to see the green layers behind it. 
-             */}
-             <MessageThreadFull />
+          {/* THE CHAT WINDOW CARD */}
+          <div className="w-full max-w-5xl h-[85vh] flex flex-col bg-[#0A0A0A]/80 backdrop-blur-xl border border-emerald-500/30 rounded-[2rem] shadow-[0_0_60px_-15px_rgba(16,185,129,0.15)] overflow-hidden relative">
+             
+             {/* Custom Header (Matches Screenshot) */}
+             <div className="flex items-center justify-between px-6 py-5 border-b border-white/5 bg-white/0 z-20 shrink-0">
+                <div className="flex items-center gap-3">
+                   <h1 className="text-lg font-bold tracking-tight text-white">Payload Chat: Build your Invoice with prompt</h1>
+                   {/* Pulsing Status Dot */}
+                   <span className="relative flex h-2.5 w-2.5">
+                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                   </span>
+                </div>
+                
+                <Link href="/" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full">
+                   <X size={20} />
+                </Link>
+             </div>
+
+             {/* Message Thread Container */}
+             <div className="flex-1 relative w-full overflow-hidden">
+                 {/* Pass className to remove default full-screen behavior if supported, 
+                    or wrap it to constrain it. 
+                 */}
+                 <div className="absolute inset-0">
+                    <MessageThreadFull />
+                 </div>
+             </div>
+
           </div>
         </TamboProvider>
       </div>

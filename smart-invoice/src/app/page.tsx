@@ -217,9 +217,18 @@ export default function Home() {
         {/* Nav */}
         <nav className="flex justify-between items-center mb-12 sm:mb-16 lg:mb-20">
           <div className="flex items-center gap-2 font-bold text-lg sm:text-xl tracking-tight">
-            <div className="w-7 h-7 sm:w-8 sm:h-8 bg-emerald-500 rounded-lg flex items-center justify-center">
-              <Receipt size={16} className="text-black sm:w-[18px] sm:h-[18px]" />
-            </div>
+            <Image
+              src="/Plogo.png"
+              alt="Payload Logo"
+              width={128}
+              height={128}
+              // className="w-20 h-20 sm:w-24 sm:h-24"
+              className="
+              w-20 h-20 sm:w-24 sm:h-24
+              drop-shadow-[0_0_12px_rgba(16,185,129,0.45)]
+  "
+            />
+
             <span className="text-sm sm:text-base lg:text-xl">Payload</span>
           </div>
           <div className="hidden md:flex gap-4 lg:gap-6 text-xs lg:text-sm text-gray-400">
@@ -261,7 +270,7 @@ export default function Home() {
             variants={fadeInUp}
             className="text-base sm:text-lg md:text-xl text-gray-400 max-w-2xl mb-8 sm:mb-10 lg:mb-12 font-poppins leading-relaxed"
           >
-            Describe your billing intent in plain English.
+            In a Hurry? Chat your billing intent in plain English.
             <br className="hidden sm:block" />
             <span className="sm:hidden"> </span>
             Watch the UI assemble itself.
@@ -277,7 +286,7 @@ export default function Home() {
                 href="/chat"
                 className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-black rounded-full text-sm sm:text-base font-bold hover:bg-emerald-500 hover:text-white transition-all transform hover:scale-105 flex items-center gap-2 shadow-lg shadow-emerald-500/20 w-full sm:w-auto justify-center sm:justify-start"
               >
-                Get Started <MoveRight size={18} className="sm:w-5 sm:h-5" />
+                Get Invoice <MoveRight size={18} className="sm:w-5 sm:h-5" />
               </a>
             </ApiKeyCheck>
             <a
