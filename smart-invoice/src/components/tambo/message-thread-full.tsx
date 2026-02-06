@@ -92,11 +92,14 @@ export const MessageThreadFull = React.forwardRef<
 
     {/* ───────── Ambient Green Glow (Global) ───────── */}
     <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-emerald-500/25 blur-[120px] rounded-full pointer-events-none" />
-    <div className="absolute bottom-[-30%] left-[-20%] w-[400px] h-[400px] bg-green-500/20 blur-[140px] rounded-full pointer-events-none" />
+    <div className="absolute bottom-[-30%] left-[-20%] w-[400px] h-[400px] bg-green-600/25 blur-[140px] rounded-full pointer-events-none" />
 
     {/* 1. Sidebar (Left) */}
     {historyPosition === "left" && threadHistorySidebar}
 
+    
+    
+    
     {/* 2. Main Chat Area */}
     <ThreadContainer
       ref={mergedRef}
@@ -133,13 +136,14 @@ export const MessageThreadFull = React.forwardRef<
       >
         <ThreadContent variant={variant}>
           <ThreadContentMessages
-            className="
-              max-w-4xl mx-auto
-              font-light text-[15 px]
-              text-white/90
-              leading-relaxed
-            "
-          />
+  className="
+    max-w-4xl mx-auto
+    font-light text-[15px] 
+    text-white
+    leading-relaxed
+    **:text-white  /* Forces headings, bold, and lists to be white */
+  "
+/>
         </ThreadContent>
       </ScrollableMessageContainer>
 
@@ -183,8 +187,8 @@ export const MessageThreadFull = React.forwardRef<
                 outline-none 
                 shadow-none
                 text-white
-                placeholder:text-zinc-500
-                font-light text-[15px]
+                placeholder:text-zinc-950
+                font-normal text-[15px]
                 leading-relaxed
                 focus-visible:ring-0 
                 focus:ring-0
@@ -213,7 +217,7 @@ export const MessageThreadFull = React.forwardRef<
                 <MessageInputMcpPromptButton
                   className="
                     h-9 w-9 rounded-full p-2
-                    text-zinc-800
+                    text-zinc-100
                     hover:text-emerald-400
                     transition-colors
                     outline-none
@@ -230,7 +234,7 @@ export const MessageThreadFull = React.forwardRef<
                 className="
                   h-9 w-9 rounded-full p-2
                   text-zinc-400
-                  hover:text-emerald-400
+                  // hover:text-emerald-400
                   transition-colors
                   outline-none
                   focus:outline-none

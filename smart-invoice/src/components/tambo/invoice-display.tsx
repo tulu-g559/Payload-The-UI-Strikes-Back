@@ -1,14 +1,11 @@
 "use client";
-import { InvoiceData } from "../invoice/schema";
-import { Check, Download, Receipt, Building2, Calendar } from "lucide-react";
+import { InvoiceData } from "@/components/invoice/schema";
+import { Check, FileText, Receipt, Calendar } from "lucide-react"; // Changed Download to FileText
 import { cn } from "@/lib/utils";
-
-
 
 export const InvoiceDisplay = (props: InvoiceData) => {
   
-  // 1. SAFE CALCULATIONS (Prevents NaN)
-  // We default every value to 0 if it's missing
+  // 1. SAFE CALCULATIONS
   const subtotal = (props.items || []).reduce((acc, item) => {
     const qty = item.quantity || 0;
     const rate = item.rate || 0;
@@ -19,6 +16,99 @@ export const InvoiceDisplay = (props: InvoiceData) => {
   const taxAmount = (subtotal * taxRate) / 100;
   const discountAmount = props.discount || 0;
   const total = subtotal + taxAmount - discountAmount;
+
+  // 2. EXPORT TO WORD FUNCTION
+  const handleExportToWord = () => {
+    // We construct a simple HTML document that Word can interpret
+    const htmlContent = `
+      <html xmlns:o='urn:schemas-microsoft-com:office:office' xmlns:w='urn:schemas-microsoft-com:office:word' xmlns='http://www.w3.org/TR/REC-html40'>
+      <head>
+        <meta charset="utf-8">
+        <title>Invoice ${props.invoiceNumber || "DRAFT"}</title>
+        <style>
+          body { font-family: Arial, sans-serif; }
+          .header { display: flex; justify-content: space-between; margin-bottom: 20px; }
+          .title { font-size: 24px; font-weight: bold; color: #10B981; }
+          table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+          th { background-color: #f3f4f6; text-align: left; padding: 8px; border-bottom: 2px solid #ddd; }
+          td { padding: 8px; border-bottom: 1px solid #eee; }
+          .totals { margin-top: 30px; text-align: right; }
+          .total-row { font-weight: bold; font-size: 18px; }
+        </style>
+      </head>
+      <body>
+        <div class="header">
+          <div>
+            <div class="title">INVOICE</div>
+            <p>#${props.invoiceNumber || "DRAFT"}</p>
+          </div>
+          <div style="text-align: right;">
+            <p><strong>Issued:</strong> ${props.date || new Date().toLocaleDateString()}</p>
+            ${props.dueDate ? `<p style="color: red;"><strong>Due:</strong> ${props.dueDate}</p>` : ''}
+          </div>
+        </div>
+
+        <hr/>
+
+        <div style="display: flex; justify-content: space-between; margin: 20px 0;">
+          <div style="width: 48%;">
+            <h3>Bill From:</h3>
+            <p><strong>${props.senderName || "Payload Agency"}</strong></p>
+            <p>${(props.senderAddress || "").replace(/\n/g, "<br/>")}</p>
+          </div>
+          <div style="width: 48%;">
+            <h3>Bill To:</h3>
+            <p><strong>${props.clientName || "Valued Client"}</strong></p>
+            <p>${props.clientEmail || ""}</p>
+            <p>${(props.clientAddress || "").replace(/\n/g, "<br/>")}</p>
+          </div>
+        </div>
+
+        <table>
+          <thead>
+            <tr>
+              <th>Description</th>
+              <th style="text-align: center;">Qty</th>
+              <th style="text-align: right;">Rate</th>
+              <th style="text-align: right;">Amount</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${(props.items || []).map(item => `
+              <tr>
+                <td>${item.description}</td>
+                <td style="text-align: center;">${item.quantity || 0}</td>
+                <td style="text-align: right;">$${(item.rate || 0).toFixed(2)}</td>
+                <td style="text-align: right;">$${((item.quantity || 0) * (item.rate || 0)).toFixed(2)}</td>
+              </tr>
+            `).join('')}
+          </tbody>
+        </table>
+
+        <div class="totals">
+          <p>Subtotal: $${subtotal.toFixed(2)}</p>
+          ${taxRate > 0 ? `<p>Tax (${taxRate}%): $${taxAmount.toFixed(2)}</p>` : ''}
+          ${discountAmount > 0 ? `<p style="color: green;">Discount: -$${discountAmount.toFixed(2)}</p>` : ''}
+          <p class="total-row">Total Due: $${total.toFixed(2)}</p>
+        </div>
+
+        ${props.notes ? `<div style="margin-top: 40px; padding: 10px; background-color: #f9fafb;"><strong>Notes:</strong> ${props.notes}</div>` : ''}
+      </body>
+      </html>
+    `;
+
+    // Create a Blob and trigger download
+    const blob = new Blob(['\ufeff', htmlContent], {
+      type: 'application/msword'
+    });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `Invoice-${props.invoiceNumber || "Draft"}.doc`; // .doc extension opens in Word
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  };
 
   return (
     <div className="w-full max-w-3xl mx-auto my-8 font-sans">
@@ -76,7 +166,7 @@ export const InvoiceDisplay = (props: InvoiceData) => {
             </div>
           </div>
 
-          {/* LINE ITEMS TABLE (Fixed Alignment) */}
+          {/* LINE ITEMS TABLE */}
           <div className="mb-10">
             <table className="w-full text-sm border-collapse">
               <thead>
@@ -107,7 +197,6 @@ export const InvoiceDisplay = (props: InvoiceData) => {
               </tbody>
             </table>
             
-            {/* Empty State if no items */}
             {(!props.items || props.items.length === 0) && (
                 <div className="text-center py-8 text-gray-400 italic">
                     No items added yet.
@@ -157,25 +246,19 @@ export const InvoiceDisplay = (props: InvoiceData) => {
         </div>
       </div>
 
-      {/* ───────────────── ACTION BAR (No Print) ───────────────── */}
+      {/* ───────────────── ACTION BAR ───────────────── */}
       <div className="mt-6 flex flex-col sm:flex-row gap-3 print:hidden">
+        
+        {/* EXPORT TO DOCS BUTTON */}
         <button 
           type="button"
-          onClick={() => window.print()}
+          onClick={handleExportToWord}
           className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-[#111] hover:bg-black text-white rounded-xl transition-all font-medium shadow-lg shadow-black/20 active:scale-[0.98]"
         >
-          <Download size={18} /> 
-          <span>Download PDF</span>
+          <FileText size={18} /> 
+          <span>Export to Docs</span>
         </button>
-        
-        {/* <button 
-          type="button"
-          onClick={() => alert("Simulated Send!")}
-          className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-black rounded-xl transition-all font-bold shadow-lg shadow-emerald-500/20 active:scale-[0.98]"
-        >
-          <Check size={18} /> 
-          <span>Send Invoice</span>
-        </button> */}
+
       </div>
 
     </div>
