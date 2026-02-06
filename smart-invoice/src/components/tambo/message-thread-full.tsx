@@ -86,6 +86,7 @@ export const MessageThreadFull = React.forwardRef<
 
   
 
+
   return (
   <div className="relative flex h-full w-full overflow-hidden bg-[#050505]">
 
@@ -116,7 +117,7 @@ export const MessageThreadFull = React.forwardRef<
             linear-gradient(to right, rgba(16,185,129,0.12) 1px, transparent 1px),
             linear-gradient(to bottom, rgba(16,185,129,0.12) 1px, transparent 1px)
           `,
-          backgroundSize: "48px 48px",
+          backgroundSize: "64px 64px",
           maskImage:
             "radial-gradient(circle at top right, black 0%, black 40%, transparent 75%)",
         }}
@@ -134,7 +135,7 @@ export const MessageThreadFull = React.forwardRef<
           <ThreadContentMessages
             className="
               max-w-4xl mx-auto
-              font-light text-[15px]
+              font-light text-[15 px]
               text-white/90
               leading-relaxed
             "
@@ -143,122 +144,121 @@ export const MessageThreadFull = React.forwardRef<
       </ScrollableMessageContainer>
 
       {/* ───────── Input + Controls Dock ───────── */}
-<div className="relative z-10 w-full px-4 pb-6 md:px-8">
+    <div className="relative z-10 w-full px-4 pb-6 md:px-8">
 
-  {/* Status */}
-  <div className="max-w-4xl mx-auto px-2 mb-2">
-    <MessageSuggestions>
-      <MessageSuggestionsStatus
-        className="text-[10px] tracking-widest uppercase text-emerald-500/80 font-mono font-bold"
-      />
-    </MessageSuggestions>
-  </div>
-
-  {/* Input Capsule */}
-  <div className="max-w-4xl mx-auto w-full">
-    <MessageInput>
-      <div
-        className={cn(
-          "group relative flex items-center gap-2",
-          "rounded-[2rem]", /* Capsule Shape */
-          "bg-[#0A0A0A]",   /* Deep Dark Background */
-          "border border-white/10",
-          "shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)]",
-          "transition-all duration-300",
-          "focus-within:border-emerald-500/50",
-          "focus-within:ring-1",
-          "focus-within:ring-emerald-500/20"
-        )}
-      >
-        {/* Text Area */}
-        <MessageInputTextarea
-          placeholder="Ask anything..."
-          className="
-            flex-1 min-h-[52px] max-h-[200px]
-            py-4 pl-6 pr-2
-            bg-transparent 
-            border-0 
-            resize-none 
-            outline-none 
-            shadow-none
-            text-white
-            placeholder:text-zinc-500
-            font-light text-[15px]
-            leading-relaxed
-            focus-visible:ring-0 
-            focus:ring-0
-          "
-        />
-
-        {/* Toolbar */}
-        <MessageInputToolbar className="flex items-center gap-1 pr-3 py-2">
-          
-          {/* Left Icon Group */}
-          <div className="flex items-center gap-1 border-r border-white/10 pr-2 mr-2">
-            <MessageInputFileButton
-              className="
-                h-9 w-9 rounded-full p-2
-                text-zinc-400
-                hover:text-emerald-400
-                hover:bg-white/5
-                transition-colors
-                outline-none
-                focus:outline-none
-                focus:ring-0
-                focus-visible:ring-0
-                focus-visible:outline-none
-              "
-            />
-            <MessageInputMcpPromptButton
-              className="
-                h-9 w-9 rounded-full p-2
-                text-zinc-400
-                hover:text-emerald-400
-                transition-colors
-                outline-none
-                focus:outline-none
-                focus:ring-0
-                focus-visible:ring-0
-                focus-visible:outline-none
-              "
-            />
-          </div>
-
-          {/* Right Icon Group */}
-          <MessageInputMcpResourceButton
-            className="
-              h-9 w-9 rounded-full p-2
-              text-zinc-400
-              hover:text-emerald-400
-              // hover:bg-white/5
-              transition-colors
-              outline-none
-              focus:outline-none
-              focus:ring-0
-              focus-visible:ring-0
-              focus-visible:outline-none
-            "
+      {/* Status */}
+      <div className="max-w-4xl mx-auto px-2 mb-2">
+        <MessageSuggestions>
+          <MessageSuggestionsStatus
+            className="text-[10px] tracking-widest uppercase text-emerald-500/80 font-mono font-bold"
           />
-
-          {/* Send Button */}
-          <MessageInputSubmitButton
-            className="
-              ml-2 h-10 w-10 rounded-full
-              bg-emerald-500 hover:bg-emerald-400
-              text-black
-              shadow-[0_0_15px_rgba(16,185,129,0.4)]
-              transition-all
-              hover:scale-105 active:scale-95
-              flex items-center justify-center
-              outline-none
-              focus:outline-none
-              focus:ring-0
-              focus-visible:ring-0
-              focus-visible:outline-none
-            "
-          />
-        </MessageInputToolbar>
+        </MessageSuggestions>
       </div>
+
+      {/* Input Capsule */}
+      <div className="max-w-4xl mx-auto w-full">
+        <MessageInput>
+          <div
+            className={cn(
+              "group relative flex items-center gap-2",
+              "rounded-4xl", /* Capsule Shape */
+              "bg-black",   /* Deep Dark Background */
+              "border border-white/10",
+              "shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)]",
+              "transition-all duration-300",
+              "focus-within:border-emerald-500/50",
+              "focus-within:ring-1",
+              "focus-within:ring-emerald-500/20"
+            )}
+          >
+            {/* Text Area */}
+            <MessageInputTextarea
+              placeholder="Ask anything..."
+              className="
+                flex-1 min-h-11 md:min-h-[52px] max-h-[200px]
+                py-3 md:py-4 pl-4 md:pl-6 pr-2
+                bg-transparent 
+                border-0 
+                resize-none 
+                outline-none 
+                shadow-none
+                text-white
+                placeholder:text-zinc-500
+                font-light text-[15px]
+                leading-relaxed
+                focus-visible:ring-0 
+                focus:ring-0
+              "
+            />
+
+            {/* Toolbar */}
+            <MessageInputToolbar className="flex items-center gap-1 pr-3 py-2">
+              
+              {/* Left Icon Group */}
+              <div className="flex items-center gap-1 border-r border-white/10 pr-2 mr-2">
+                <MessageInputFileButton
+                  className="
+                    h-9 w-9 rounded-full p-2
+                    bg-white/5
+                    text-emerald-500
+                    hover:text-emerald-400
+                    transition-colors
+                    outline-none
+                    focus:outline-none
+                    focus:ring-0
+                    focus-visible:ring-0
+                    focus-visible:outline-none
+                  "
+                />
+                <MessageInputMcpPromptButton
+                  className="
+                    h-9 w-9 rounded-full p-2
+                    text-zinc-800
+                    hover:text-emerald-400
+                    transition-colors
+                    outline-none
+                    focus:outline-none
+                    focus:ring-0
+                    focus-visible:ring-0
+                    focus-visible:outline-none
+                  "
+                />
+              </div>
+
+              {/* Right Icon Group */}
+              <MessageInputMcpResourceButton
+                className="
+                  h-9 w-9 rounded-full p-2
+                  text-zinc-400
+                  hover:text-emerald-400
+                  transition-colors
+                  outline-none
+                  focus:outline-none
+                  focus:ring-0
+                  focus-visible:ring-0
+                  focus-visible:outline-none
+                "
+              />
+
+              {/* Send Button */}
+              <MessageInputSubmitButton
+                className="
+                  ml-2 h-10 w-10 rounded-full
+                  bg-emerald-500 hover:bg-emerald-400
+                  text-black
+                  shadow-[0_0_15px_rgba(16,185,129,0.4)]
+                  transition-all
+                  hover:scale-105 active:scale-95
+                  flex items-center justify-center
+                  outline-none
+                  focus:outline-none
+                  focus:ring-0
+                  focus-visible:ring-0
+                  focus-visible:outline-none
+                "
+              />
+            </MessageInputToolbar>
+          </div>
 
       <MessageInputError className="text-red-400 text-xs mt-2 ml-4 font-mono font-bold" />
     </MessageInput>
@@ -269,8 +269,8 @@ export const MessageThreadFull = React.forwardRef<
   <div
     className="
       max-w-4xl mx-auto mt-4 overflow-x-auto pb-1 no-scrollbar
-      [&_button]:bg-gray-200
-      [&_button]:text-shadow-emerald-400
+      [&_button]:bg-emerald-950
+      [&_button]:text-shadow-gray-200
       [&_button]:border-none 
       [&_button]:font-medium 
       [&_button]:shadow-lg

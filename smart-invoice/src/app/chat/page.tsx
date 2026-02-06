@@ -69,7 +69,7 @@ export default function ChatPage() {
 
 
       {/* ─────────────── Main Chat Interface ─────────────── */}
-      <div className="relative z-10 h-screen w-full flex items-center justify-center p-4 md:p-6 lg:p-8">
+      <div className="relative z-10 min-h-screen w-full flex items-center justify-center p-4 md:p-6 lg:p-8">
         
         <TamboProvider
           apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY!}
@@ -79,32 +79,30 @@ export default function ChatPage() {
           mcpServers={mcpServers}
         >
           {/* THE CHAT WINDOW CARD */}
-          <div className="w-full max-w-5xl h-[85vh] flex flex-col bg-[#0A0A0A]/80 backdrop-blur-xl border border-emerald-500/30 rounded-[2rem] shadow-[0_0_60px_-15px_rgba(16,185,129,0.15)] overflow-hidden relative">
+          <div className="w-full max-w-5xl h-auto lg:h-[85vh] flex flex-col bg-[#0A0A0A]/80 backdrop-blur-xl border border-emerald-500/30 rounded-[1rem] sm:rounded-[2rem] shadow-[0_0_60px_-15px_rgba(16,185,129,0.15)] overflow-hidden relative">
              
              {/* Custom Header (Matches Screenshot) */}
-             <div className="flex items-center justify-between px-6 py-5 border-b border-white/5 bg-white/0 z-20 shrink-0">
-                <div className="flex items-center gap-3">
-                   <h1 className="text-lg font-bold tracking-tight text-white">Payload Chat: Build your Invoice with prompt</h1>
-                   {/* Pulsing Status Dot */}
-                   <span className="relative flex h-2.5 w-2.5">
-                      <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                      <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-                   </span>
-                </div>
-                
+             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-6 py-3 sm:py-5 border-b border-white/5 bg-white/0 z-20 gap-3 sm:gap-0 shrink-0">
+               <div className="flex items-center gap-3 w-full sm:w-auto">
+                 <h1 className="text-base sm:text-lg font-bold tracking-tight text-white leading-tight">Payload Chat: Build your Invoice in a hurry !!</h1>
+                 {/* Pulsing Status Dot */}
+                 <span className="relative flex h-2.5 w-2.5">
+                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                 </span>
+               </div>
+
+               <div className="mt-2 sm:mt-0">
                 <Link href="/" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full">
-                   <X size={20} />
+                  <X size={20} />
                 </Link>
+               </div>
              </div>
 
              {/* Message Thread Container */}
              <div className="flex-1 relative w-full overflow-hidden">
-                 {/* Pass className to remove default full-screen behavior if supported, 
-                    or wrap it to constrain it. 
-                 */}
-                 <div className="absolute inset-0">
-                    <MessageThreadFull />
-                 </div>
+               {/* Render thread normally so it respects parent height on small screens */}
+               <MessageThreadFull className="h-full w-full" />
              </div>
 
           </div>

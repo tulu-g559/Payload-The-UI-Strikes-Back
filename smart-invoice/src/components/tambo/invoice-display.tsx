@@ -61,7 +61,7 @@ export const InvoiceDisplay = (props: InvoiceData) => {
                <h4 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Bill From</h4>
                <p className="font-bold text-gray-900 text-lg">{props.senderName || "Payload Agency"}</p>
                <p className="text-gray-500 text-sm whitespace-pre-line leading-relaxed">
-                  {props.senderAddress || "123 Innovation Dr.\nTech City, CA 94000"}
+                  {props.senderAddress || "Payload Farm\nTech City, 713210"}
                </p>
             </div>
 
@@ -168,14 +168,14 @@ export const InvoiceDisplay = (props: InvoiceData) => {
           <span>Download PDF</span>
         </button>
         
-        <button 
+        {/* <button 
           type="button"
           onClick={() => alert("Simulated Send!")}
           className="flex-1 flex items-center justify-center gap-2 px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-black rounded-xl transition-all font-bold shadow-lg shadow-emerald-500/20 active:scale-[0.98]"
         >
           <Check size={18} /> 
           <span>Send Invoice</span>
-        </button>
+        </button> */}
       </div>
 
     </div>
