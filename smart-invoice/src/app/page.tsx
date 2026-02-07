@@ -273,7 +273,8 @@ export default function Home() {
             In a Hurry? Chat your billing intent in plain English.
             <br className="hidden sm:block" />
             <span className="sm:hidden"> </span>
-            Watch the UI assemble itself.
+            Watch the UI assemble itself.<br></br>
+            Export Invoice to your local
           </motion.p>
 
           {/* Buttons (Left Aligned) */}
@@ -351,7 +352,7 @@ export default function Home() {
             <div className="grid grid-cols-2 gap-3 sm:gap-4">
               <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition-colors">
                 <div className="text-2xl sm:text-3xl font-bold text-emerald-500 mb-1">
-                  99%
+                  98%
                 </div>
                 <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-gray-500 font-bold">
                   Accuracy
@@ -359,7 +360,7 @@ export default function Home() {
               </div>
               <div className="p-4 sm:p-6 rounded-2xl sm:rounded-3xl bg-white/5 border border-white/5 text-center hover:bg-white/10 transition-colors">
                 <div className="text-2xl sm:text-3xl font-bold text-emerald-500 mb-1">
-                  &lt; 2s
+                  &lt; 5s
                 </div>
                 <div className="text-[9px] sm:text-[10px] uppercase tracking-wider text-gray-500 font-bold">
                   Generation

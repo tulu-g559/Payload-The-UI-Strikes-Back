@@ -2,7 +2,7 @@
 
 import { TamboProvider } from "@tambo-ai/react";
 import { components } from "@/lib/tambo";
-import { MessageThreadCollapsible } from "@/components/tambo/message-thread-collapsible";
+// Collapsible chat UI removed — inline chat overlay not used anymore.
 
 /**
  * Lightweight wrapper that mounts the Tambo chat overlay.
@@ -15,8 +15,7 @@ export function ChatOverlay() {
       apiKey={process.env.NEXT_PUBLIC_TAMBO_API_KEY ?? ""}
       components={components}
     >
-      {/* Collapsible AI UI lives globally */}
-      <MessageThreadCollapsible />
+      {/* Collapsible AI UI removed */}
     </TamboProvider>
   );
 }

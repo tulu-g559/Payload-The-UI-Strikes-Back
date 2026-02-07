@@ -136,14 +136,13 @@ export const MessageThreadFull = React.forwardRef<
       >
         <ThreadContent variant={variant}>
           <ThreadContentMessages
-  className="
-    max-w-4xl mx-auto
-    font-light text-[15px] 
-    text-white
-    leading-relaxed
-    **:text-white  /* Forces headings, bold, and lists to be white */
-  "
-/>
+            className="
+              max-w-4xl mx-auto
+              font-light text-[15 px]
+              text-white
+              leading-relaxed
+            "
+          />
         </ThreadContent>
       </ScrollableMessageContainer>
 
