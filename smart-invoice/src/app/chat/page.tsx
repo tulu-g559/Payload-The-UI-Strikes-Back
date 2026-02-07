@@ -80,25 +80,32 @@ export default function ChatPage() {
           mcpServers={mcpServers}
         >
           {/* THE CHAT WINDOW CARD */}
-          <div className="w-full max-w-5xl h-auto lg:h-[85vh] flex flex-col bg-[#0A0A0A]/80 backdrop-blur-xl border border-emerald-500/30 rounded-[1rem] sm:rounded-[2rem] shadow-[0_0_60px_-15px_rgba(16,185,129,0.15)] overflow-hidden relative">
-             
-             {/* Custom Header (Matches Screenshot) */}
-             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between px-4 sm:px-6 py-3 sm:py-5 border-b border-white/5 bg-white/0 z-20 gap-3 sm:gap-0 shrink-0">
-               <div className="flex items-center gap-3 w-full sm:w-auto">
-                 <h1 className="text-base sm:text-lg font-bold tracking-tight text-white leading-tight">Payload Chat: Build your Invoice in a hurry !!</h1>
-                 {/* Pulsing Status Dot */}
-                 <span className="relative flex h-2.5 w-2.5">
-                   <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
-                   <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-                 </span>
-               </div>
+<div className="w-full max-w-5xl h-[85vh] flex flex-col bg-[#0A0A0A]/90 backdrop-blur-2xl border border-emerald-500/20 rounded-2xl sm:rounded-[2rem] shadow-[0_0_80px_-20px_rgba(16,185,129,0.15)] overflow-hidden relative">
+    
+    {/* Custom Header - Fixed Alignment */}
+    <div className="flex items-center justify-between px-5 py-4 border-b border-white/5 bg-white/0 z-20 shrink-0">
+    
+    {/* Left Side: Title & Status */}
+    <div className="flex items-center gap-3 overflow-hidden">
+        {/* Pulsing Status Dot */}
+        <span className="relative flex h-2.5 w-2.5 shrink-0">
+            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+            <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+        </span>
+        
+        <h1 className="text-sm sm:text-base font-bold tracking-tight text-white/90 truncate">
+        Payload Chat <span className="hidden sm:inline text-emerald-500/50 mx-2">|</span> <span className="font-normal text-white/50 text-xs sm:text-sm">Build invoices in a hurry</span>
+        </h1>
+    </div>
 
-               <div className="mt-2 sm:mt-0">
-                <Link href="/" className="text-gray-400 hover:text-white transition-colors p-2 hover:bg-white/5 rounded-full">
-                  <X size={20} />
-                </Link>
-               </div>
-             </div>
+    {/* Right Side: Close Button */}
+    <Link 
+        href="/" 
+        className="text-white/40 hover:text-white hover:bg-white/5 transition-all p-2 rounded-full shrink-0 ml-2"
+    >
+        <X size={20} />
+    </Link>
+    </div>
 
              {/* Message Thread Container */}
              <div className="flex-1 relative w-full overflow-hidden">

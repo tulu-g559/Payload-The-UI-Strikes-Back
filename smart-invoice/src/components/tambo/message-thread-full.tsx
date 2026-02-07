@@ -140,16 +140,16 @@ export const MessageThreadFull = React.forwardRef<
             <ThreadContentMessages
               className="
                 max-w-4xl mx-auto
-                font-light text-[15px] text-white leading-relaxed
+                font-light text-[15px] text-gray-700 leading-relaxed
                 space-y-6 pb-4
                 
                 /* Force global text color */
-                [&_*]:text-white
+                [&_*]:text-gray-700
 
                 /* USER MESSAGE STYLING (The Green Box) */
                 /* Targeting specific tambo/ai selectors often used for user messages */
                 [&_.user-message]:!bg-emerald-600
-                [&_.user-message]:!text-white
+                [&_.user-message]:!text-black
                 [&_.user-message]:!border-none
                 [&_.user-message]:rounded-2xl
                 [&_.user-message]:px-5
@@ -159,7 +159,7 @@ export const MessageThreadFull = React.forwardRef<
                 [&_.user-message:hover]:!bg-emerald-600 
 
                 /* AI MESSAGE STYLING */
-                [&_.ai-message]:text-gray-200
+                [&_.ai-message]:text-gray-700
               "
             />
           </ThreadContent>
