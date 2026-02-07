@@ -6,6 +6,7 @@ import { components, tools } from "@/lib/tambo";
 import { TamboProvider } from "@tambo-ai/react";
 import { X, Sparkles } from "lucide-react"; // Import icons for the header
 import Link from "next/link";
+import { Footer } from "@/components/Footer";
 
 /**
  * Chat page component that renders the Tambo chat interface with a dark theme.
@@ -108,6 +109,7 @@ export default function ChatPage() {
           </div>
         </TamboProvider>
       </div>
+      <Footer />
     </div>
   );
 }

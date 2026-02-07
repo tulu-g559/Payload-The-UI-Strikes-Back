@@ -10,7 +10,6 @@ import {
   MessageInputSubmitButton,
   MessageInputTextarea,
   MessageInputToolbar,
-  MessageInputMcpConfigButton
 } from "@/components/tambo/message-input";
 import {
   MessageSuggestions,
@@ -36,16 +35,10 @@ import type { VariantProps } from "class-variance-authority";
 import * as React from "react";
 import { cn } from "@/lib/utils";
 
-/**
- * Props for the MessageThreadFull component
- */
 export interface MessageThreadFullProps extends React.HTMLAttributes<HTMLDivElement> {
   variant?: VariantProps<typeof messageVariants>["variant"];
 }
 
-/**
- * A full-screen chat thread component with message history, input, and suggestions
- */
 export const MessageThreadFull = React.forwardRef<
   HTMLDivElement,
   MessageThreadFullProps
@@ -53,11 +46,14 @@ export const MessageThreadFull = React.forwardRef<
   const { containerRef, historyPosition } = useThreadContainerContext();
   const mergedRef = useMergeRefs<HTMLDivElement | null>(ref, containerRef);
 
-  // Sidebar Component - Dark & Transparent
+  // 1. Static Sidebar (Glassy Dark)
   const threadHistorySidebar = (
-    <ThreadHistory position={historyPosition} className="bg-black/20 backdrop-blur-sm border-white/5">
-      <ThreadHistoryHeader />
-      <ThreadHistoryNewButton />
+    <ThreadHistory 
+      position={historyPosition} 
+      className="bg-black/40 backdrop-blur-md border-r border-white/5 z-20"
+    >
+      <ThreadHistoryHeader className="text-emerald-500/80 font-bold tracking-widest uppercase text-[10px]" />
+      <ThreadHistoryNewButton className="hover:bg-emerald-500/10 hover:border-emerald-500/20 transition-colors" />
       <ThreadHistorySearch />
       <ThreadHistoryList />
     </ThreadHistory>
@@ -76,226 +72,247 @@ export const MessageThreadFull = React.forwardRef<
       detailedSuggestion: "Show me a breakdown of this month's expenses.",
       messageId: "analysis-query",
     },
-    {
-      id: "suggestion-3",
-      title: "Add Client",
-      detailedSuggestion: "Add a new client profile for John Doe.",
-      messageId: "client-query",
-    },
   ];
 
-  
-
-
   return (
-  <div className="relative flex h-full w-full overflow-hidden bg-[#050505]">
+    // ROOT CONTAINER: Matches Homepage #050505
+    <div className="relative flex h-full w-full overflow-hidden bg-[#050505] selection:bg-emerald-500/30">
 
-    {/* ───────── Ambient Green Glow (Global) ───────── */}
-    <div className="absolute -top-40 -right-40 w-[500px] h-[500px] bg-emerald-500/25 blur-[120px] rounded-full pointer-events-none" />
-    <div className="absolute bottom-[-30%] left-[-20%] w-[400px] h-[400px] bg-green-600/25 blur-[140px] rounded-full pointer-events-none" />
-
-    {/* 1. Sidebar (Left) */}
-    {historyPosition === "left" && threadHistorySidebar}
-
-    
-    
-    
-    {/* 2. Main Chat Area */}
-    <ThreadContainer
-      ref={mergedRef}
-      disableSidebarSpacing
-      className={cn(
-        "relative flex-1 flex flex-col",
-        "bg-transparent",
-        className
-      )}
-      {...props}
-    >
-      {/* ───────── Subtle Grid / Texture Layer ───────── */}
+      {/* ───────────────── STATIC BACKGROUND LAYERS (From Home) ───────────────── */}
+      
+      {/* 1. Static Grid */}
       <div
         aria-hidden
-        className="absolute inset-0 pointer-events-none opacity-[0.12]"
+        className="absolute inset-0 z-0 pointer-events-none"
         style={{
           backgroundImage: `
-            linear-gradient(to right, rgba(16,185,129,0.12) 1px, transparent 1px),
-            linear-gradient(to bottom, rgba(16,185,129,0.12) 1px, transparent 1px)
+            linear-gradient(to right, rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+            linear-gradient(to bottom, rgba(16, 185, 129, 0.1) 1px, transparent 1px)
           `,
-          backgroundSize: "64px 64px",
-          maskImage:
-            "radial-gradient(circle at top right, black 0%, black 40%, transparent 75%)",
+          backgroundSize: "50px 50px",
+          maskImage: "radial-gradient(circle at center, black 40%, transparent 100%)",
         }}
       />
 
-      {/* ───────── Messages Area ───────── */}
-      <ScrollableMessageContainer
-        className="relative z-10 flex-1 px-4 md:px-6 pt-6 scroll-smooth"
+      {/* 2. Top Left Orb - Deep Emerald */}
+      <div className="absolute -top-40 -left-40 w-[600px] h-[600px] bg-emerald-600/20 rounded-full blur-[120px] pointer-events-none z-0" />
+
+      {/* 3. Top Right Glow - Vivid */}
+      <div 
+        className="absolute -top-[100px] -right-[100px] w-[500px] h-[500px] rounded-full pointer-events-none z-0"
         style={{
-          maskImage:
-            "linear-gradient(to bottom, transparent 0%, black 32px)",
+          background: "radial-gradient(circle, rgba(52, 211, 153, 0.15) 0%, rgba(52, 211, 153, 0) 70%)",
+          filter: "blur(60px)",
         }}
+      />
+
+      {/* 4. Bottom Right Orb */}
+      <div className="absolute bottom-[-10%] right-[-5%] w-[500px] h-[500px] bg-green-500/10 rounded-full blur-[100px] pointer-events-none z-0" />
+
+
+      {/* ───────────────── CONTENT LAYOUT ───────────────── */}
+
+      {/* Sidebar Left */}
+      {historyPosition === "left" && threadHistorySidebar}
+
+      {/* Main Chat Area */}
+      <ThreadContainer
+        ref={mergedRef}
+        disableSidebarSpacing
+        className={cn("relative flex-1 flex flex-col bg-transparent z-10", className)}
+        {...props}
       >
-        <ThreadContent variant={variant}>
-          <ThreadContentMessages
-            className="
-              max-w-4xl mx-auto
-              font-light text-[15 px]
-              text-white
-              leading-relaxed
-            "
-          />
-        </ThreadContent>
-      </ScrollableMessageContainer>
-
-      {/* ───────── Input + Controls Dock ───────── */}
-    <div className="relative z-10 w-full px-4 pb-6 md:px-8">
-
-      {/* Status */}
-      <div className="max-w-4xl mx-auto px-2 mb-2">
-        <MessageSuggestions>
-          <MessageSuggestionsStatus
-            className="text-[10px] tracking-widest uppercase text-emerald-500/80 font-mono font-bold"
-          />
-        </MessageSuggestions>
-      </div>
-
-      {/* Input Capsule */}
-      <div className="max-w-4xl mx-auto w-full">
-        <MessageInput>
-          <div
-            className={cn(
-              "group relative flex items-center gap-2",
-              "rounded-4xl", /* Capsule Shape */
-              "bg-black",   /* Deep Dark Background */
-              "border border-white/10",
-              "shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)]",
-              "transition-all duration-300",
-              "focus-within:border-emerald-500/50",
-              "focus-within:ring-1",
-              "focus-within:ring-emerald-500/20"
-            )}
-          >
-            {/* Text Area */}
-            <MessageInputTextarea
-              placeholder="Ask anything..."
+        
+        {/* Messages Scroll Area */}
+        <ScrollableMessageContainer
+          className="flex-1 px-4 md:px-8 pt-6 scroll-smooth"
+          style={{
+            // Fade out messages at the very top
+            maskImage: "linear-gradient(to bottom, transparent 0%, black 40px)",
+          }}
+        >
+          <ThreadContent variant={variant}>
+            {/* FIXES:
+               1. text-white: Forces all text to be white.
+               2. User Message Bubble: Forces Emerald background, White Text, No Hover Shift.
+               3. AI Message: Ensures clean readability.
+            */}
+            <ThreadContentMessages
               className="
-                flex-1 min-h-11 md:min-h-[52px] max-h-[200px]
-                py-3 md:py-4 pl-4 md:pl-6 pr-2
-                bg-transparent 
-                border-0 
-                resize-none 
-                outline-none 
-                shadow-none
-                text-white
-                placeholder:text-zinc-950
-                font-normal text-[15px]
-                leading-relaxed
-                focus-visible:ring-0 
-                focus:ring-0
+                max-w-4xl mx-auto
+                font-light text-[15px] text-white leading-relaxed
+                space-y-6 pb-4
+                
+                /* Force global text color */
+                [&_*]:text-white
+
+                /* USER MESSAGE STYLING (The Green Box) */
+                /* Targeting specific tambo/ai selectors often used for user messages */
+                [&_.user-message]:!bg-emerald-600
+                [&_.user-message]:!text-white
+                [&_.user-message]:!border-none
+                [&_.user-message]:rounded-2xl
+                [&_.user-message]:px-5
+                [&_.user-message]:py-3
+                
+                /* Prevent Hover Color Shift */
+                [&_.user-message:hover]:!bg-emerald-600 
+
+                /* AI MESSAGE STYLING */
+                [&_.ai-message]:text-gray-200
               "
             />
+          </ThreadContent>
+        </ScrollableMessageContainer>
 
-            {/* Toolbar */}
-            <MessageInputToolbar className="flex items-center gap-1 pr-3 py-2">
-              
-              {/* Left Icon Group */}
-              <div className="flex items-center gap-1 border-r border-white/10 pr-2 mr-2">
-                <MessageInputFileButton
-                  className="
-                    h-9 w-9 rounded-full p-2
-                    bg-white/5
-                    text-emerald-500
-                    hover:text-emerald-400
-                    transition-colors
-                    outline-none
-                    focus:outline-none
-                    focus:ring-0
-                    focus-visible:ring-0
-                    focus-visible:outline-none
-                  "
-                />
-                <MessageInputMcpPromptButton
-                  className="
-                    h-9 w-9 rounded-full p-2
-                    text-zinc-100
-                    hover:text-emerald-400
-                    transition-colors
-                    outline-none
-                    focus:outline-none
-                    focus:ring-0
-                    focus-visible:ring-0
-                    focus-visible:outline-none
-                  "
-                />
-              </div>
 
-              {/* Right Icon Group */}
-              <MessageInputMcpResourceButton
-                className="
-                  h-9 w-9 rounded-full p-2
-                  text-zinc-400
-                  // hover:text-emerald-400
-                  transition-colors
-                  outline-none
-                  focus:outline-none
-                  focus:ring-0
-                  focus-visible:ring-0
-                  focus-visible:outline-none
-                "
-              />
-
-              {/* Send Button */}
-              <MessageInputSubmitButton
-                className="
-                  ml-2 h-10 w-10 rounded-full
-                  bg-emerald-500 hover:bg-emerald-400
-                  text-black
-                  shadow-[0_0_15px_rgba(16,185,129,0.4)]
-                  transition-all
-                  hover:scale-105 active:scale-95
-                  flex items-center justify-center
-                  outline-none
-                  focus:outline-none
-                  focus:ring-0
-                  focus-visible:ring-0
-                  focus-visible:outline-none
-                "
-              />
-            </MessageInputToolbar>
+        {/* ───────────────── INPUT DOCK ───────────────── */}
+        <div className="w-full px-4 pb-6 md:px-8">
+          
+          {/* Status Text */}
+          <div className="max-w-4xl mx-auto px-2 mb-2">
+            <MessageSuggestions>
+              <MessageSuggestionsStatus className="text-[10px] tracking-widest uppercase text-emerald-500/80 font-mono font-bold" />
+            </MessageSuggestions>
           </div>
 
-      <MessageInputError className="text-red-400 text-xs mt-2 ml-4 font-mono font-bold" />
-    </MessageInput>
-  </div>
+          {/* ─────────────── INPUT CAPSULE ─────────────── */}
+          <div className="max-w-4xl mx-auto w-full">
+            <MessageInput>
+              <div
+                className={cn(
+                  "relative flex items-center gap-2 overflow-hidden",
+                  "rounded-[2rem]", // Fully Rounded
+                  "bg-[#0A0A0A]",   // Dark Background
+                  "border border-white/10",
+                  "shadow-[0_10px_40px_-10px_rgba(0,0,0,0.8)]",
+                  "transition-all duration-300",
+                  "focus-within:border-emerald-500/50", // Emerald Glow on Focus
+                  "focus-within:ring-1",
+                  "focus-within:ring-emerald-500/20"
+                )}
+              >
+                
+                {/* TEXT AREA - Fixed Transparency */}
+                <MessageInputTextarea
+                  placeholder="Ask anything..."
+                  className="
+                    flex-1 min-h-[52px] max-h-[200px]
+                    py-4 pl-6 pr-2
+                    bg-transparent !bg-none   /* CRITICAL: Removes white bg */
+                    border-0 shadow-none outline-none
+                    resize-none
+                    
+                    text-white
+                    placeholder:text-zinc-600
+                    caret-emerald-500
+                    
+                    font-light text-[15px] leading-relaxed
+                    
+                    focus:ring-0 focus:bg-transparent
+                  "
+                />
 
-  {/* Suggestions Pills */}
-  {/* The [&_button] classes force the inner buttons to be White BG / Black Text */}
-  <div
-    className="
-      max-w-4xl mx-auto mt-4 overflow-x-auto pb-1 no-scrollbar
-      [&_button]:bg-emerald-950
-      [&_button]:text-shadow-gray-200
-      [&_button]:border-none 
-      [&_button]:font-medium 
-      [&_button]:shadow-lg
-      [&_button]:hover:opacity-90 
-      [&_button]:hover:scale-[1.02]
-      [&_button]:transition-transform
-    "
-    style={{
-      maskImage: "linear-gradient(to right, transparent, black 24px, black 90%, transparent)",
-    }}
-  >
-    <MessageSuggestions initialSuggestions={defaultSuggestions}>
-      <MessageSuggestionsList className="flex gap-3 px-2" />
-    </MessageSuggestions>
-  </div>
-</div>
-    </ThreadContainer>
+                {/* TOOLBAR - Fixed Button Backgrounds */}
+                <MessageInputToolbar className="flex items-center gap-1 pr-2 py-2 pl-0">
+                  
+                  {/* Left Group */}
+                  <div className="flex items-center gap-1 border-r border-white/10 pr-2 mr-1">
+                    <MessageInputFileButton
+                      className="
+                        h-9 w-9 rounded-full p-2
+                        bg-transparent             /* CRITICAL: Transparent bg */
+                        text-zinc-500 
+                        hover:text-emerald-400 
+                        hover:bg-white/5
+                        transition-colors
+                        outline-none focus:outline-none focus:ring-0
+                      "
+                    />
+                    <MessageInputMcpPromptButton
+                      className="
+                        h-9 w-9 rounded-full p-2
+                        bg-transparent             /* CRITICAL: Transparent bg */
+                        text-zinc-500 
+                        hover:text-emerald-400 
+                        hover:bg-white/5
+                        transition-colors
+                        outline-none focus:outline-none focus:ring-0
+                      "
+                    />
+                  </div>
 
-    {/* 3. Sidebar (Right) */}
-    {historyPosition === "right" && threadHistorySidebar}
-  </div>
-);
+                  {/* Right Group */}
+                  <MessageInputMcpResourceButton
+                    className="
+                      h-9 w-9 rounded-full p-2
+                      bg-transparent               /* CRITICAL: Transparent bg */
+                      text-zinc-500 
+                      hover:text-emerald-400 
+                      hover:bg-white/5
+                      transition-colors
+                      outline-none focus:outline-none focus:ring-0
+                    "
+                  />
 
+                  {/* Submit Button (Green Circle) */}
+                  <MessageInputSubmitButton
+                    className="
+                      ml-2 h-10 w-10 rounded-full
+                      bg-emerald-500 hover:bg-emerald-400
+                      text-black
+                      shadow-[0_0_15px_rgba(16,185,129,0.4)]
+                      flex items-center justify-center
+                      transition-transform hover:scale-105 active:scale-95
+                      outline-none focus:outline-none focus:ring-0
+                      border-none
+                    "
+                  />
+                </MessageInputToolbar>
+              </div>
+
+              <MessageInputError className="text-red-400 text-xs mt-2 ml-4 font-mono font-bold" />
+            </MessageInput>
+          </div>
+
+          {/* SUGGESTIONS (Styled to match dark theme) */}
+          <div
+            className="
+              max-w-4xl mx-auto mt-4 overflow-x-auto pb-1 no-scrollbar
+              
+              /* Button Styling Override */
+              [&_button]:bg-white/5
+              [&_button]:text-zinc-300
+              [&_button]:border
+              [&_button]:border-white/5
+              [&_button]:rounded-full
+              [&_button]:px-4
+              [&_button]:py-1.5
+              [&_button]:text-xs
+              [&_button]:font-medium
+              
+              /* Hover Effects */
+              [&_button:hover]:bg-emerald-500/10
+              [&_button:hover]:text-emerald-400
+              [&_button:hover]:border-emerald-500/20
+              [&_button]:transition-all
+            "
+            style={{
+              maskImage: "linear-gradient(to right, transparent, black 24px, black 90%, transparent)",
+            }}
+          >
+            <MessageSuggestions initialSuggestions={defaultSuggestions}>
+              <MessageSuggestionsList className="flex gap-2 px-2" />
+            </MessageSuggestions>
+          </div>
+
+        </div>
+      </ThreadContainer>
+
+      {/* Sidebar Right */}
+      {historyPosition === "right" && threadHistorySidebar}
+    </div>
+  );
 });
+
 MessageThreadFull.displayName = "MessageThreadFull";

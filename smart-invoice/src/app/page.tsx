@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { ApiKeyCheck } from "@/components/ApiKeyCheck";
 import { SoundController } from "@/components/SoundController";
+import { Footer } from "@/components/Footer";
 
 // ─────────────────────────────────────────────────────────────
 // 1. Defined Animation Variants (These were missing previously)
@@ -250,7 +251,20 @@ export default function Home() {
             className="inline-flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-[10px] sm:text-xs font-bold text-emerald-400 mb-6 sm:mb-8 uppercase tracking-widest"
           >
             <Sparkles size={10} className="sm:w-3 sm:h-3" /> 
-            <span className="whitespace-nowrap">Powered by Tambo AI</span>
+            {/* <span className="whitespace-nowrap normal-case playfair-display-500">Powered by Tambo AI</span> */}
+            <span className="whitespace-nowrap normal-case">
+                  Powered by{" "}
+                  <a
+                    href="https://tambo.co"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    <span className="playfair-display-500 lowercase text-[13px] sm:text-2xl">
+                      tambo
+                    </span>
+                  </a>
+                </span>
           </motion.div>
 
           {/* Headline */}
@@ -291,10 +305,9 @@ export default function Home() {
               </a>
             </ApiKeyCheck>
             <a
-              href="/interactables"
               className="px-6 sm:px-8 py-3 sm:py-4 bg-white/5 border border-white/10 rounded-full text-sm sm:text-base font-bold hover:bg-white/10 transition backdrop-blur-sm w-full sm:w-auto text-center"
             >
-              Explore Components
+              Explore 
             </a>
           </motion.div>
         </motion.section>
@@ -379,10 +392,11 @@ export default function Home() {
             <Layout size={14} className="sm:w-4 sm:h-4" /> Effective
           </div>
           <div className="flex items-center gap-1.5 sm:gap-2 font-mono text-xs sm:text-sm">
-            <FileText size={14} className="sm:w-4 sm:h-4" /> Calm
+            <FileText size={14} className="sm:w-4 sm:h-4" /> Ready
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 }

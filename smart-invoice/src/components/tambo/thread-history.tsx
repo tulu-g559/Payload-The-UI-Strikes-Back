@@ -241,35 +241,41 @@ const ThreadHistoryNewButton = React.forwardRef<
   );
 
   return (
-    <button
-      ref={ref}
-      onClick={handleNewThread}
+  <button
+    ref={ref}
+    onClick={handleNewThread}
+    className={cn(
+      "flex flex-row items-center leading-none rounded-xl mb-6 transition-all duration-200 cursor-pointer group",
+      "border border-dashed border-white/10 hover:border-emerald-500/50 hover:bg-emerald-950/20",
+      isCollapsed
+        ? "p-3 justify-center aspect-square"
+        : "px-3 py-2.5 gap-2 w-full"
+    )}
+    title="New thread"
+    {...props}
+  >
+    {/* Icon */}
+    <div
       className={cn(
-        // BUTTON: Emerald Outline style matching the payload theme
-        "flex items-center rounded-xl mb-6 transition-all duration-200 cursor-pointer group border border-dashed border-white/10 hover:border-emerald-500/50 hover:bg-emerald-950/20",
-        isCollapsed ? "p-3 justify-center aspect-square" : "px-3 py-2.5 gap-3 w-full",
+        "flex items-center justify-center h-5 w-5 rounded-md text-emerald-500 transition-colors",
+        !isCollapsed && "bg-emerald-500/10"
       )}
-      title="New thread"
-      {...props}
     >
-      <div className={cn(
-        "flex items-center justify-center rounded-lg transition-colors",
-        isCollapsed ? "text-emerald-500" : "text-emerald-500 bg-emerald-500/10 p-1"
-      )}>
-         <Plus className="h-4 w-4" />
-      </div>
-      
-      <span
-        className={cn(
-          "text-sm font-medium text-gray-300 group-hover:text-emerald-400 whitespace-nowrap",
-          isCollapsed
-            ? "opacity-0 w-0 overflow-hidden"
-            : "opacity-100 w-auto transition-all duration-300",
-        )}
-      >
-        New Invoice Chat
-      </span>
-    </button>
+      <Plus className="h-4 w-4" />
+    </div>
+
+    {/* Text */}
+    <span
+      className={cn(
+        "text-sm font-medium text-gray-300 whitespace-nowrap group-hover:text-emerald-400 transition-colors",
+        isCollapsed
+          ? "opacity-0 scale-x-0 origin-left"
+          : "opacity-100 scale-x-100"
+      )}
+    >
+      New Invoice Chat
+    </span>
+  </button>
   );
 });
 ThreadHistoryNewButton.displayName = "ThreadHistory.NewButton";
@@ -482,7 +488,6 @@ const ThreadHistoryList = React.forwardRef<
                         <ThreadOptionsDropdown
                         thread={thread}
                         onRename={(t) => { setEditingThread(t); setNewName(t.name || ""); }}
-                        onGenerateName={async (t) => { await generateThreadName(t.id); await refetch(); }}
                         />
                     </div>
                 )}
@@ -516,11 +521,9 @@ ThreadHistoryList.displayName = "ThreadHistory.List";
 const ThreadOptionsDropdown = ({
   thread,
   onRename,
-  onGenerateName,
 }: {
   thread: TamboThread;
   onRename: (thread: TamboThread) => void;
-  onGenerateName: (thread: TamboThread) => void;
 }) => {
   return (
     <DropdownMenu.Root>
@@ -547,16 +550,6 @@ const ThreadOptionsDropdown = ({
           >
             <Pencil className="h-3.5 w-3.5 text-gray-500" />
             Rename Chat
-          </DropdownMenu.Item>
-          <DropdownMenu.Item
-            className="flex items-center gap-2 px-3 py-2 text-xs font-medium hover:bg-emerald-500/10 hover:text-emerald-400 rounded-lg cursor-pointer outline-none transition-colors group"
-            onClick={(e) => {
-              e.stopPropagation();
-              onGenerateName(thread);
-            }}
-          >
-            <Sparkles className="h-3.5 w-3.5 text-emerald-600 group-hover:text-emerald-400" />
-            Auto-Generate Name
           </DropdownMenu.Item>
         </DropdownMenu.Content>
       </DropdownMenu.Portal>
