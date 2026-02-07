@@ -10,8 +10,8 @@ export const Footer = () => {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6 sm:gap-8">
           {/* Left: Name */}
           <div className="text-center sm:text-left">
-            <p className="text-white font-light text-xl sm:text-3xl playfair-display-500">
-              Arnab Ghosh
+            <p className="text-white font-light text-xl sm:text-xl playfair-display-500">
+              ArnabG
             </p>
           </div>
 
