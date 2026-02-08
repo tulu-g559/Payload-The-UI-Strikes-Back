@@ -66,8 +66,8 @@ To run Payload locally, you'll need a Tambo API key.
 
 1.  **Clone the repo**
     ```sh
-    git clone [https://github.com/yourusername/payload-smart-invoice.git](https://github.com/yourusername/payload-smart-invoice.git)
-    cd payload-smart-invoice
+    git clone [https://github.com/yourusername/payload-smart-invoice.git](https://github.comtulu-g559/Payload-The-UI-Strikes-Back.git)
+    cd smart-invoice
     ```
 
 2.  **Install dependencies**
@@ -118,7 +118,7 @@ Contributions are what make the open source community such an amazing place to l
 
 <div align="center">
 
-**Built with 💚 by [Arnab Ghosh](https://github.com/ArnabGhosh04)**
+**Built with 💚 by [Arnab Ghosh](https://github.com/tulu-g559)**
 
 *For "The UI Strikes Back" Hackathon*
 
