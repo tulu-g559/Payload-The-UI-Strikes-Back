@@ -47,8 +47,7 @@ By leveraging **Tambo's Generative UI capabilities**, Payload allows freelancers
 | **The Chat Experience** | **The Smart Invoice** |
 |:---:|:---:|
 | *Floating capsule input with ambient glow.* | *Professional, export-ready documents.* |
-| ![Chat UI]("https://github.com/user-attachments/assets/b9a57b2f-d24f-4af8-8727-5f7fd5280f19")
-| ![Invoice UI]("https://github.com/user-attachments/assets/f9098500-e7c6-49b6-82bf-df976ff88f3e") |
+| ![Chat UI](https://github.com/user-attachments/assets/b9a57b2f-d24f-4af8-8727-5f7fd5280f19) | ![Invoice UI](https://github.com/user-attachments/assets/f9098500-e7c6-49b6-82bf-df976ff88f3e) |
 
 > *Screenshots of the actual "Payload" Dark/Emerald theme.*
 
