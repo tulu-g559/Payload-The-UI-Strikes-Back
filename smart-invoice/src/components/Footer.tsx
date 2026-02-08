@@ -27,7 +27,7 @@ export const Footer = () => {
               <Github size={20} />
             </Link>
             <Link
-              href="https://linkedin.com/arnab-g"
+              href="https://linkedin.com/in/arnab-g"
               target="_blank"
               rel="noopener noreferrer"
               className="text-gray-400 hover:text-emerald-400 transition-colors"
